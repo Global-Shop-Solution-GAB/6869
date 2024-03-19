@@ -1,0 +1,250 @@
+﻿Program.Sub.ScreenSU.Start
+Gui.FormSizeWeight..Create(BaseForm)
+Gui.FormSizeWeight..Caption("Size and Weight Maintenance")
+Gui.FormSizeWeight..Size(531,535)
+Gui.FormSizeWeight..MinX(0)
+Gui.FormSizeWeight..MinY(0)
+Gui.FormSizeWeight..Position(0,0)
+Gui.FormSizeWeight..AlwaysOnTop(False)
+Gui.FormSizeWeight..FontName("Tahoma")
+Gui.FormSizeWeight..FontSize(8.25)
+Gui.FormSizeWeight..ControlBox(True)
+Gui.FormSizeWeight..MaxButton(True)
+Gui.FormSizeWeight..MinButton(True)
+Gui.FormSizeWeight..MousePointer(0)
+Gui.FormSizeWeight..Moveable(True)
+Gui.FormSizeWeight..Sizeable(True)
+Gui.FormSizeWeight..ShowInTaskBar(True)
+Gui.FormSizeWeight..TitleBar(True)
+Gui.FormSizeWeight..Event(UnLoad,FormSizeWeight_UnLoad)
+Gui.FormSizeWeight.lblSize.Create(Label,"Size",True,19,13,0,16,16,True,0,"Tahoma",8.25,,0,0)
+Gui.FormSizeWeight.lblSize.BorderStyle(0)
+Gui.FormSizeWeight.lblWeight.Create(Label,"Weight",True,39,13,0,189,16,True,0,"Tahoma",8.25,,0,0)
+Gui.FormSizeWeight.lblWeight.BorderStyle(0)
+Gui.FormSizeWeight.txtSize.Create(TextBox,"",True,161,20,0,16,35,True,0,"Tahoma",8.25,,1)
+Gui.FormSizeWeight.txtSize.MaxLength(10)
+Gui.FormSizeWeight.txtSize.Event(GotFocus,txtSize_GotFocus)
+Gui.FormSizeWeight.txtSize.Mask(">")
+Gui.FormSizeWeight.txtWeight.Create(TextBox,"",True,161,20,0,189,35,True,0,"Tahoma",8.25,,1)
+Gui.FormSizeWeight.txtWeight.Event(GotFocus,txtWeight_GotFocus)
+Gui.FormSizeWeight.txtWeight.Mask(">")
+Gui.FormSizeWeight.txtWeight.NumericOnly(1)
+Gui.FormSizeWeight.cmdSave.Create(Button)
+Gui.FormSizeWeight.cmdSave.Enabled(True)
+Gui.FormSizeWeight.cmdSave.Visible(True)
+Gui.FormSizeWeight.cmdSave.Zorder(0)
+Gui.FormSizeWeight.cmdSave.Size(50,23)
+Gui.FormSizeWeight.cmdSave.Position(359,33)
+Gui.FormSizeWeight.cmdSave.Caption("Save")
+Gui.FormSizeWeight.cmdSave.FontName("Tahoma")
+Gui.FormSizeWeight.cmdSave.FontSize(8.25)
+Gui.FormSizeWeight.cmdSave.Event(Click,cmdSave_Click)
+Gui.FormSizeWeight.GsGridSize.Create(GsGridControl)
+Gui.FormSizeWeight.GsGridSize.Enabled(True)
+Gui.FormSizeWeight.GsGridSize.Visible(True)
+Gui.FormSizeWeight.GsGridSize.Zorder(0)
+Gui.FormSizeWeight.GsGridSize.Size(502,431)
+Gui.FormSizeWeight.GsGridSize.Position(17,65)
+Gui.FormSizeWeight.GsGridSize.Anchor(15)
+Gui.FormSizeWeight.GsGridSize.Event(RowCellClick,GsGridSize_RowCellClick)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.SetErrorHandler("Main_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Function.Intrinsic.UI.UsePixels ' Allows you to use Pixels instead of Twips throughout
+
+F.Intrinsic.Control.CallSub(Get_Data)
+F.Intrinsic.Control.CallSub(Set_Prop)
+
+Gui.FormSizeWeight..Show
+Gui.FormSizeWeight..AlwaysOnTop(True)
+Gui.FormSizeWeight..AlwaysOnTop(False)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Main_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Size_Weight.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormSizeWeight_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Main.End
+
+Program.Sub.FormSizeWeight_UnLoad.Start
+F.Intrinsic.Control.SetErrorHandler("FormSizeWeight_UnLoad_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("FormSizeWeight_UnLoad_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.Control.End
+Function.Intrinsic.Control.EndIf
+Program.Sub.FormSizeWeight_UnLoad.End
+
+Program.Sub.GsGridSize_RowCellClick.Start
+F.Intrinsic.Control.SetErrorHandler("GsGridSize_RowCellClick_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sSql.Declare(String,"")
+
+F.Intrinsic.Control.If(V.Args.Column.UCase,=,"DELETE_ROW")
+	F.Intrinsic.String.Build("Delete From GCG_6869_Size_Weight Where P_Size = '{0}' and Weight = {1}",V.DataTable.Size(V.Args.RowIndex).P_Size!FieldValTrim,V.DataTable.Size(V.Args.RowIndex).Weight!FieldValTrim,V.Local.sSql)
+	F.ODBC.Connection!Con.OpenCompanyConnection
+	F.ODBC.Connection!Con.Execute(V.Local.sSql)
+	F.ODBC.Connection!Con.Close
+	F.Data.DataTable.DeleteRow("Size",V.Args.RowIndex)
+	F.Data.DataTable.AcceptChanges("Size")
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("GsGridSize_RowCellClick_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Size_Weight.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormSizeWeight_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.GsGridSize_RowCellClick.End
+
+Program.Sub.cmdSave_Click.Start
+F.Intrinsic.Control.SetErrorHandler("cmdSave_Click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.fWeight.Declare(Float,0)
+V.Local.sSize.Declare(String,"")
+V.Local.sFilter.Declare(String,"")
+V.Local.sSql.Declare(String,"")
+
+V.Local.fWeight.Set(V.Screen.FormSizeWeight!txtWeight.Text)
+V.Local.sSize.Set(V.Screen.FormSizeWeight!txtSize.Text)
+
+F.Intrinsic.String.Build("P_Size = '{0}' and Weight = {1}",V.Local.sSize.Trim,V.Local.fWeight,V.Local.sFilter)
+
+F.Data.DataView.Create("Size","Temp",22,V.Local.sFilter,"")
+
+F.Intrinsic.Control.If(V.DataView.Size!Temp.RowCount--,=,-1)
+	F.Data.DataTable.AddRow("Size","P_Size",V.Local.sSize,"Weight",V.Local.fWeight)
+	F.Intrinsic.String.Build("Insert Into GCG_6869_Size_Weight (P_Size,Weight) Values ('{0}',{1})",V.Local.sSize,V.Local.fWeight,V.Local.sSql)
+	F.ODBC.Connection!Con.OpenCompanyConnection
+	F.ODBC.Connection!Con.Execute(V.Local.sSql)
+	F.ODBC.Connection!Con.Close
+F.Intrinsic.Control.EndIf
+
+F.Data.DataView.Close("Size","Temp")
+
+Gui.FormSizeWeight.txtSize.Text("")
+Gui.FormSizeWeight.txtWeight.Text(V.Ambient.DBNull)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdSave_Click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Size_Weight.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormSizeWeight_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.cmdSave_Click.End
+
+Program.Sub.txtWeight_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtWeight_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormSizeWeight.txtWeight.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtWeight_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Size_Weight.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormSizeWeight_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtWeight_GotFocus.End
+
+Program.Sub.txtSize_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtSize_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormSizeWeight.txtSize.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtSize_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Size_Weight.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormSizeWeight_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtSize_GotFocus.End
+
+Program.Sub.Get_Data.Start
+F.Intrinsic.Control.SetErrorHandler("Get_Data_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.ODBC.Connection!Con.OpenCompanyConnection
+
+F.Data.DataTable.CreateFromSQL("Size","con","Select rtrim(ucase(P_Size)) as P_Size, Weight From GCG_6869_Size_Weight Order by P_Size,Weight",True)
+F.Data.DataTable.AddColumn("Size","DELETE_ROW",String)
+
+F.ODBC.Connection!Con.Close
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Get_Data_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Size_Weight.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormSizeWeight_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Get_Data.End
+
+Program.Sub.Set_Prop.Start
+F.Intrinsic.Control.SetErrorHandler("Set_Prop_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormSizeWeight.GsGridSize.AddGridviewFromDatatable("GSize","Size")
+Gui.FormSizeWeight.GsGridSize.SetGridviewProperty("GSize","Editable",False)
+Gui.FormSizeWeight.GsGridSize.SetGridviewProperty("GSize","ReadOnly",True)
+
+Gui.FormSizeWeight.GsGridSize.SetColumnProperty("GSize","P_Size","Caption","Size")
+Gui.FormSizeWeight.GsGridSize.SetColumnProperty("GSize","DELETE_ROW","Caption"," ")
+Gui.FormSizeWeight.GsGridSize.ColumnEdit("GSize","DELETE_ROW","EditorButton","Delete")
+
+Gui.FormSizeWeight.GsGridSize.MainView("GSize")
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Set_Prop_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Size_Weight.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormSizeWeight_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Set_Prop.End
+
+Program.Sub.Comments.Start
+${$5$}$20.1.8249.18654$}$1
+${$6$}$rking$}$20220819150507106$}$QNdZLVy4bWuiWa9jh1ZTiKVzNnEzrvL4hd7LTDF+I6uDGGGjyKdI7GiVdmIu+LUuW03Pn8iT3Sw=
+Program.Sub.Comments.End
