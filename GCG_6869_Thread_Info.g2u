@@ -1,0 +1,370 @@
+﻿Program.Sub.ScreenSU.Start
+Gui.FormThreadInfo..Create(BaseForm)
+Gui.FormThreadInfo..Caption("Thread Info")
+Gui.FormThreadInfo..Size(597,285)
+Gui.FormThreadInfo..MinX(0)
+Gui.FormThreadInfo..MinY(0)
+Gui.FormThreadInfo..Position(0,0)
+Gui.FormThreadInfo..AlwaysOnTop(False)
+Gui.FormThreadInfo..FontName("Tahoma")
+Gui.FormThreadInfo..FontSize(8.25)
+Gui.FormThreadInfo..ControlBox(True)
+Gui.FormThreadInfo..MaxButton(True)
+Gui.FormThreadInfo..MinButton(True)
+Gui.FormThreadInfo..MousePointer(0)
+Gui.FormThreadInfo..Moveable(True)
+Gui.FormThreadInfo..Sizeable(False)
+Gui.FormThreadInfo..ShowInTaskBar(True)
+Gui.FormThreadInfo..TitleBar(True)
+Gui.FormThreadInfo..Event(UnLoad,FormThreadInfo_UnLoad)
+Gui.FormThreadInfo.lblSide1.Create(Label,"Side 1",True,29,13,0,130,41,True,0,"Tahoma",8.25,,0,0)
+Gui.FormThreadInfo.lblSide1.BorderStyle(0)
+Gui.FormThreadInfo.lblSide2.Create(Label,"Side 2",True,29,13,0,332,41,True,0,"Tahoma",8.25,,0,0)
+Gui.FormThreadInfo.lblSide2.BorderStyle(0)
+Gui.FormThreadInfo.lblType.Create(Label,"Type",True,24,13,0,11,86,True,0,"Tahoma",8.25,,0,0)
+Gui.FormThreadInfo.lblType.BorderStyle(0)
+Gui.FormThreadInfo.ddlSide1.Create(DropDownList)
+Gui.FormThreadInfo.ddlSide1.Enabled(True)
+Gui.FormThreadInfo.ddlSide1.Visible(True)
+Gui.FormThreadInfo.ddlSide1.Zorder(0)
+Gui.FormThreadInfo.ddlSide1.Size(179,20)
+Gui.FormThreadInfo.ddlSide1.Position(55,82)
+Gui.FormThreadInfo.ddlSide1.FontName("Tahoma")
+Gui.FormThreadInfo.ddlSide1.FontSize(8.25)
+Gui.FormThreadInfo.ddlSide2.Create(DropDownList)
+Gui.FormThreadInfo.ddlSide2.Enabled(True)
+Gui.FormThreadInfo.ddlSide2.Visible(True)
+Gui.FormThreadInfo.ddlSide2.Zorder(0)
+Gui.FormThreadInfo.ddlSide2.Size(179,20)
+Gui.FormThreadInfo.ddlSide2.Position(256,82)
+Gui.FormThreadInfo.ddlSide2.FontName("Tahoma")
+Gui.FormThreadInfo.ddlSide2.FontSize(8.25)
+Gui.FormThreadInfo.lblSize.Create(Label,"Size",True,19,13,0,12,119,True,0,"Tahoma",8.25,,0,0)
+Gui.FormThreadInfo.lblSize.BorderStyle(0)
+Gui.FormThreadInfo.ddlSize1.Create(DropDownList)
+Gui.FormThreadInfo.ddlSize1.Enabled(True)
+Gui.FormThreadInfo.ddlSize1.Visible(True)
+Gui.FormThreadInfo.ddlSize1.Zorder(0)
+Gui.FormThreadInfo.ddlSize1.Size(179,20)
+Gui.FormThreadInfo.ddlSize1.Position(55,118)
+Gui.FormThreadInfo.ddlSize1.FontName("Tahoma")
+Gui.FormThreadInfo.ddlSize1.FontSize(8.25)
+Gui.FormThreadInfo.ddlSize1.Event(SelectedIndexChanged,ddlSize1_SelectedIndexChanged)
+Gui.FormThreadInfo.ddlSize2.Create(DropDownList)
+Gui.FormThreadInfo.ddlSize2.Enabled(True)
+Gui.FormThreadInfo.ddlSize2.Visible(True)
+Gui.FormThreadInfo.ddlSize2.Zorder(0)
+Gui.FormThreadInfo.ddlSize2.Size(179,20)
+Gui.FormThreadInfo.ddlSize2.Position(257,115)
+Gui.FormThreadInfo.ddlSize2.FontName("Tahoma")
+Gui.FormThreadInfo.ddlSize2.FontSize(8.25)
+Gui.FormThreadInfo.ddlSize2.Event(SelectedIndexChanged,ddlSize2_SelectedIndexChanged)
+Gui.FormThreadInfo.lblWeight.Create(Label,"Weight",True,34,13,0,12,152,True,0,"Tahoma",8.25,,0,0)
+Gui.FormThreadInfo.lblWeight.BorderStyle(0)
+Gui.FormThreadInfo.ddlWeight1.Create(DropDownList)
+Gui.FormThreadInfo.ddlWeight1.Enabled(True)
+Gui.FormThreadInfo.ddlWeight1.Visible(True)
+Gui.FormThreadInfo.ddlWeight1.Zorder(0)
+Gui.FormThreadInfo.ddlWeight1.Size(179,20)
+Gui.FormThreadInfo.ddlWeight1.Position(55,151)
+Gui.FormThreadInfo.ddlWeight1.FontName("Tahoma")
+Gui.FormThreadInfo.ddlWeight1.FontSize(8.25)
+Gui.FormThreadInfo.ddlWeight2.Create(DropDownList)
+Gui.FormThreadInfo.ddlWeight2.Enabled(True)
+Gui.FormThreadInfo.ddlWeight2.Visible(True)
+Gui.FormThreadInfo.ddlWeight2.Zorder(0)
+Gui.FormThreadInfo.ddlWeight2.Size(179,20)
+Gui.FormThreadInfo.ddlWeight2.Position(257,151)
+Gui.FormThreadInfo.ddlWeight2.FontName("Tahoma")
+Gui.FormThreadInfo.ddlWeight2.FontSize(8.25)
+Gui.FormThreadInfo.lblBoxPin.Create(Label,"Box/Pin",True,36,13,0,12,188,True,0,"Tahoma",8.25,,0,0)
+Gui.FormThreadInfo.lblBoxPin.BorderStyle(0)
+Gui.FormThreadInfo.ddlBox1.Create(DropDownList)
+Gui.FormThreadInfo.ddlBox1.Enabled(True)
+Gui.FormThreadInfo.ddlBox1.Visible(True)
+Gui.FormThreadInfo.ddlBox1.Zorder(0)
+Gui.FormThreadInfo.ddlBox1.Size(179,20)
+Gui.FormThreadInfo.ddlBox1.Position(55,184)
+Gui.FormThreadInfo.ddlBox1.FontName("Tahoma")
+Gui.FormThreadInfo.ddlBox1.FontSize(8.25)
+Gui.FormThreadInfo.ddlBox2.Create(DropDownList)
+Gui.FormThreadInfo.ddlBox2.Enabled(True)
+Gui.FormThreadInfo.ddlBox2.Visible(True)
+Gui.FormThreadInfo.ddlBox2.Zorder(0)
+Gui.FormThreadInfo.ddlBox2.Size(179,20)
+Gui.FormThreadInfo.ddlBox2.Position(257,184)
+Gui.FormThreadInfo.ddlBox2.FontName("Tahoma")
+Gui.FormThreadInfo.ddlBox2.FontSize(8.25)
+Gui.FormThreadInfo.cmdSave.Create(Button)
+Gui.FormThreadInfo.cmdSave.Enabled(True)
+Gui.FormThreadInfo.cmdSave.Visible(True)
+Gui.FormThreadInfo.cmdSave.Zorder(0)
+Gui.FormThreadInfo.cmdSave.Size(75,23)
+Gui.FormThreadInfo.cmdSave.Position(55,222)
+Gui.FormThreadInfo.cmdSave.Caption("Save")
+Gui.FormThreadInfo.cmdSave.FontName("Tahoma")
+Gui.FormThreadInfo.cmdSave.FontSize(8.25)
+Gui.FormThreadInfo.cmdSave.Event(Click,cmdSave_Click)
+Gui.FormThreadInfo.lblID.Create(Label,"ID",True,11,13,0,503,41,True,0,"Tahoma",8.25,,0,0)
+Gui.FormThreadInfo.lblID.BorderStyle(0)
+Gui.FormThreadInfo.lblOD.Create(Label,"OD",True,15,13,0,503,118,True,0,"Tahoma",8.25,,0,0)
+Gui.FormThreadInfo.lblOD.BorderStyle(0)
+Gui.FormThreadInfo.txtID.Create(TextBox,"",True,147,20,0,448,82,True,0,"Tahoma",8.25,,1)
+Gui.FormThreadInfo.txtID.MaxLength(20)
+Gui.FormThreadInfo.txtOD.Create(TextBox,"",True,147,20,0,448,151,True,0,"Tahoma",8.25,,1)
+Gui.FormThreadInfo.txtOD.MaxLength(20)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+V.Global.sPart.Declare(String,"")
+V.Global.sLocation.Declare(String,"")
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.SetErrorHandler("Main_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Function.Intrinsic.UI.UsePixels ' Allows you to use Pixels instead of Twips throughout
+
+F.Intrinsic.Control.SelectCase(V.Caller.Hook)
+	F.Intrinsic.Control.Case(10120)
+		V.Passed.000069.Set("Thread Info")
+		
+	F.Intrinsic.Control.Case(10220)	
+		'getting thread info for selected part
+		F.Intrinsic.Control.CallSub(Get_Data)
+		
+		Gui.FormThreadInfo..Show
+		Gui.FormThreadInfo..AlwaysOnTop(True)
+		Gui.FormThreadInfo..AlwaysOnTop(False)
+		
+	F.Intrinsic.Control.CaseElse
+		F.Intrinsic.Control.End
+		
+F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Main_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Thread_Info.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormThreadInfo_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Main.End
+
+Program.Sub.FormThreadInfo_UnLoad.Start
+F.Intrinsic.Control.SetErrorHandler("FormThreadInfo_UnLoad_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("FormThreadInfo_UnLoad_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.Control.End
+Function.Intrinsic.Control.EndIf
+Program.Sub.FormThreadInfo_UnLoad.End
+
+Program.Sub.ddlSize1_SelectedIndexChanged.Start
+F.Intrinsic.Control.SetErrorHandler("ddlSize1_SelectedIndexChanged_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sFilter.Declare(String,"")
+
+'clearing weight and repopulating ddl for weight for selected size
+
+Gui.FormThreadInfo.ddlWeight1.ClearItems
+
+Gui.FormThreadInfo.ddlWeight1.AddItem(" ",0)
+
+F.Intrinsic.String.Build("P_Size = '{0}'",V.Screen.FormThreadInfo!ddlSize1.Text,V.Local.sFilter)
+F.Data.DataView.Create("Weight","Temp",22,V.Local.sFilter,"Weight")
+Gui.FormThreadInfo.ddlWeight1.AddItems("DataView","Weight","Temp","Weight","Weight")
+F.Data.DataView.Close("Weight","Temp")
+	
+Gui.FormThreadInfo.ddlWeight1.Text(" ")
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("ddlSize1_SelectedIndexChanged_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Thread_Info.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormThreadInfo_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.ddlSize1_SelectedIndexChanged.End
+
+Program.Sub.ddlSize2_SelectedIndexChanged.Start
+F.Intrinsic.Control.SetErrorHandler("ddlSize2_SelectedIndexChanged_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sFilter.Declare(String,"")
+
+'clearing weight and repopulating ddl for weight for selected size
+
+Gui.FormThreadInfo.ddlWeight2.ClearItems
+
+Gui.FormThreadInfo.ddlWeight2.AddItem(" ",0)
+
+F.Intrinsic.String.Build("P_Size = '{0}'",V.Screen.FormThreadInfo!ddlSize2.Text,V.Local.sFilter)
+F.Data.DataView.Create("Weight","Temp",22,V.Local.sFilter,"Weight")
+Gui.FormThreadInfo.ddlWeight2.AddItems("DataView","Weight","Temp","Weight","Weight")
+F.Data.DataView.Close("Weight","Temp")
+	
+Gui.FormThreadInfo.ddlWeight2.Text(" ")
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("ddlSize2_SelectedIndexChanged_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Thread_Info.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormThreadInfo_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.ddlSize2_SelectedIndexChanged.End
+
+Program.Sub.Get_Data.Start
+F.Intrinsic.Control.SetErrorHandler("Get_Data_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sSql.Declare(String,"")
+V.Local.sRev.Declare(String,"")
+V.Local.bRev.Declare(Boolean,False)
+V.Local.sFilter.Declare(String,"")
+
+F.Global.General.ReadOption("070008",0,"0000",V.Local.bRev)
+
+F.Intrinsic.String.RTrim(V.Passed.000007,V.Global.sPart)
+F.Intrinsic.String.RTrim(V.Passed.000008,V.Local.sRev)
+F.Intrinsic.String.RTrim(V.Passed.000009,V.Global.sLocation)
+
+F.Intrinsic.Control.If(V.Local.bRev)
+	F.Intrinsic.String.RPad(V.Global.sPart," ",17,V.Global.sPart)
+	F.Intrinsic.String.Build("{0}{1}",V.Global.sPart,V.Local.sRev,V.Global.sPart)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Build("Select Part, Location, S1_Type, S1_Size, S1_Weight, S1_BoxPin, S2_Type, S2_Size, S2_Weight, S2_BoxPin, rtrim(ID) as ID, rtrim(OD) as OD From GCG_6869_Part_Thread Where Part = '{0}' and Location = '{1}'",V.Global.sPart.Trim,V.Global.sLocation.Trim,V.Local.sSql)
+
+F.ODBC.Connection!con.OpenCompanyConnection
+
+F.Data.DataTable.CreateFromSQL("ThreadInfo",Con,V.Local.sSql,True)
+
+F.Data.DataTable.CreateFromSQL("Thread",con,"Select rtrim(Thread) as Thread, rtrim(Licensor) as Licensor From GCG_6869_Thread_Lic Order by Thread",True)
+F.Data.DataTable.CreateFromSQL("Size",con,"Select Distinct rtrim(P_Size) as P_Size From GCG_6869_Size_Weight Order by P_Size",True)
+F.Data.DataTable.CreateFromSQL("Weight",con,"Select rtrim(P_Size) as P_Size, Weight From GCG_6869_Size_Weight Order by P_Size,Weight",True)
+F.Data.DataTable.CreateFromSQL("Box",con,"Select rtrim(Box_Pin) as Box_Pin From GCG_6869_Box_Pin",True)
+
+F.ODBC.Connection!con.Close
+
+Gui.FormThreadInfo.ddlSide1.AddItem(" ",0)
+Gui.FormThreadInfo.ddlSide2.AddItem(" ",0)
+
+Gui.FormThreadInfo.ddlSize1.AddItem(" ",0)
+Gui.FormThreadInfo.ddlSize2.AddItem(" ",0)
+
+Gui.FormThreadInfo.ddlSide1.AddItems("DataTable","Thread","Thread","Thread")
+Gui.FormThreadInfo.ddlSide2.AddItems("DataTable","Thread","Thread","Thread")
+
+Gui.FormThreadInfo.ddlSize1.AddItems("DataTable","Size","P_Size","P_Size")
+Gui.FormThreadInfo.ddlSize2.AddItems("DataTable","Size","P_Size","P_Size")
+
+Gui.FormThreadInfo.ddlWeight1.AddItem(" ",0)
+Gui.FormThreadInfo.ddlWeight2.AddItem(" ",0)
+
+Gui.FormThreadInfo.ddlBox1.AddItem(" ",0)
+Gui.FormThreadInfo.ddlBox2.AddItem(" ",0)
+
+Gui.FormThreadInfo.ddlBox1.AddItems("DataTable","Box","Box_Pin","Box_Pin")
+Gui.FormThreadInfo.ddlBox2.AddItems("DataTable","Box","Box_Pin","Box_Pin")
+
+F.Intrinsic.Control.BlockEvents
+F.Intrinsic.Control.If(V.DataTable.ThreadInfo.RowCount--,<>,-1)
+	Gui.FormThreadInfo.ddlSide1.Text(V.DataTable.ThreadInfo(V.DataTable.ThreadInfo.RowCount--).S1_Type!FieldValTrim)
+	Gui.FormThreadInfo.ddlSide2.Text(V.DataTable.ThreadInfo(V.DataTable.ThreadInfo.RowCount--).S2_Type!FieldValTrim)
+	Gui.FormThreadInfo.ddlSize1.Text(V.DataTable.ThreadInfo(V.DataTable.ThreadInfo.RowCount--).S1_Size!FieldValTrim)
+	Gui.FormThreadInfo.ddlSize2.Text(V.DataTable.ThreadInfo(V.DataTable.ThreadInfo.RowCount--).S2_Size!FieldValTrim)
+	F.Intrinsic.String.Build("P_Size = '{0}'",V.DataTable.ThreadInfo(V.DataTable.ThreadInfo.RowCount--).S1_Size!FieldValTrim,V.Local.sFilter)
+	F.Data.DataView.Create("Weight","Temp",22,V.Local.sFilter,"Weight")
+	Gui.FormThreadInfo.ddlWeight1.AddItems("DataView","Weight","Temp","Weight","Weight")
+	F.Data.DataView.Close("Weight","Temp")
+	F.Intrinsic.String.Build("P_Size = '{0}'",V.DataTable.ThreadInfo(V.DataTable.ThreadInfo.RowCount--).S2_Size!FieldValTrim,V.Local.sFilter)
+	F.Data.DataView.Create("Weight","Temp",22,V.Local.sFilter,"Weight")
+	Gui.FormThreadInfo.ddlWeight2.AddItems("DataView","Weight","Temp","Weight","Weight")
+	F.Data.DataView.Close("Weight","Temp")
+	Gui.FormThreadInfo.ddlWeight1.Text(V.DataTable.ThreadInfo(V.DataTable.ThreadInfo.RowCount--).S1_Weight!FieldVal)
+	Gui.FormThreadInfo.ddlWeight2.Text(V.DataTable.ThreadInfo(V.DataTable.ThreadInfo.RowCount--).S2_Weight!FieldVal)
+	Gui.FormThreadInfo.ddlBox1.Text(V.DataTable.ThreadInfo(V.DataTable.ThreadInfo.RowCount--).S1_BoxPin!FieldValTrim)
+	Gui.FormThreadInfo.ddlBox2.Text(V.DataTable.ThreadInfo(V.DataTable.ThreadInfo.RowCount--).S2_BoxPin!FieldValTrim)
+	Gui.FormThreadInfo.txtID.Text(V.DataTable.ThreadInfo(V.DataTable.ThreadInfo.RowCount--).ID!FieldValTrim)
+	Gui.FormThreadInfo.txtOD.Text(V.DataTable.ThreadInfo(V.DataTable.ThreadInfo.RowCount--).OD!FieldValTrim)
+F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.UnBlockEvents
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Get_Data_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Thread_Info.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormThreadInfo_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Get_Data.End
+
+Program.Sub.cmdSave_Click.Start
+F.Intrinsic.Control.SetErrorHandler("cmdSave_Click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+v.Local.sValue.Declare(String,"")
+
+F.Intrinsic.Control.If(V.DataTable.ThreadInfo.RowCount--,<>,-1)
+	F.Data.DataTable.SetValue("ThreadInfo",-1,"S1_Type",V.Screen.FormThreadInfo!ddlSide1.Text,"S1_Size",V.Screen.FormThreadInfo!ddlSize1.Text,"S1_BoxPin",V.Screen.FormThreadInfo!ddlBox1.Text,"S2_Type",V.Screen.FormThreadInfo!ddlSide2.Text,"S2_Size",V.Screen.FormThreadInfo!ddlSize2.Text,"S2_BoxPin",V.Screen.FormThreadInfo!ddlBox2.Text,"ID",V.Screen.FormThreadInfo!txtID.Text,"OD",V.Screen.FormThreadInfo!txtOD.Text)
+F.Intrinsic.Control.Else
+	F.Data.DataTable.AddRow("ThreadInfo","Part",V.Global.sPart,"Location",V.Global.sLocation,"S1_Type",V.Screen.FormThreadInfo!ddlSide1.Text,"S1_Size",V.Screen.FormThreadInfo!ddlSize1.Text,"S1_BoxPin",V.Screen.FormThreadInfo!ddlBox1.Text,"S2_Type",V.Screen.FormThreadInfo!ddlSide2.Text,"S2_Size",V.Screen.FormThreadInfo!ddlSize2.Text,"S2_BoxPin",V.Screen.FormThreadInfo!ddlBox2.Text,"ID",V.Screen.FormThreadInfo!txtID.Text,"OD",V.Screen.FormThreadInfo!txtOD.Text)
+F.Intrinsic.Control.EndIf
+
+V.Local.sValue.Set(V.Screen.FormThreadInfo!ddlWeight1.Text)
+F.Intrinsic.Control.If(V.Local.sValue.Trim,=,"")
+	F.Data.DataTable.SetValue("ThreadInfo",-1,"S1_Weight",V.Ambient.DBNULL)
+F.Intrinsic.Control.Else
+	F.Data.DataTable.SetValue("ThreadInfo",-1,"S1_Weight",V.Screen.FormThreadInfo!ddlWeight1.Text)
+F.Intrinsic.Control.EndIf
+
+V.Local.sValue.Set(V.Screen.FormThreadInfo!ddlWeight2.Text)
+F.Intrinsic.Control.If(V.Local.sValue.Trim,=,"")
+	F.Data.DataTable.SetValue("ThreadInfo",-1,"S2_Weight",V.Ambient.DBNULL)
+F.Intrinsic.Control.Else
+	F.Data.DataTable.SetValue("ThreadInfo",-1,"S2_Weight",V.Screen.FormThreadInfo!ddlWeight2.Text)
+F.Intrinsic.Control.EndIf
+
+F.ODBC.Connection!con.OpenCompanyConnection
+
+F.Data.DataTable.SaveToDB("ThreadInfo",con,"GCG_6869_Part_Thread","Part*!*Location",3)
+
+F.ODBC.Connection!Con.Close	
+
+F.Intrinsic.Control.CallSub(FormThreadInfo_UnLoad)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdSave_Click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Thread_Info.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormThreadInfo_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.cmdSave_Click.End
+
+Program.Sub.Comments.Start
+${$5$}$20.1.8305.18039$}$1
+${$6$}$rking$}$20221010142930230$}$QNdZLVy4bWuiWa9jh1ZTiKVzNnEzrvL4IPXhzkJ7hrIFch2y6NajIr2AUaLTd/vnILl+CEChZTs=
+Program.Sub.Comments.End
