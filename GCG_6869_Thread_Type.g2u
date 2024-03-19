@@ -1,0 +1,249 @@
+﻿Program.Sub.ScreenSU.Start
+Gui.FormThread..Create(BaseForm)
+Gui.FormThread..Caption("Thread Type and Licensor Maintenance")
+Gui.FormThread..Size(531,535)
+Gui.FormThread..MinX(0)
+Gui.FormThread..MinY(0)
+Gui.FormThread..Position(0,0)
+Gui.FormThread..AlwaysOnTop(False)
+Gui.FormThread..FontName("Tahoma")
+Gui.FormThread..FontSize(8.25)
+Gui.FormThread..ControlBox(True)
+Gui.FormThread..MaxButton(True)
+Gui.FormThread..MinButton(True)
+Gui.FormThread..MousePointer(0)
+Gui.FormThread..Moveable(True)
+Gui.FormThread..Sizeable(True)
+Gui.FormThread..ShowInTaskBar(True)
+Gui.FormThread..TitleBar(True)
+Gui.FormThread..Event(UnLoad,FormThread_UnLoad)
+Gui.FormThread.lblThread.Create(Label,"Thread",True,34,13,0,16,16,True,0,"Tahoma",8.25,,0,0)
+Gui.FormThread.lblThread.BorderStyle(0)
+Gui.FormThread.lblLicensor.Create(Label,"Licensor",True,39,13,0,189,16,True,0,"Tahoma",8.25,,0,0)
+Gui.FormThread.lblLicensor.BorderStyle(0)
+Gui.FormThread.txtThread.Create(TextBox,"",True,161,20,0,16,35,True,0,"Tahoma",8.25,,1)
+Gui.FormThread.txtThread.MaxLength(50)
+Gui.FormThread.txtThread.Event(GotFocus,txtThread_GotFocus)
+Gui.FormThread.txtThread.Mask(">")
+Gui.FormThread.txtLicensor.Create(TextBox,"",True,161,20,0,189,35,True,0,"Tahoma",8.25,,1)
+Gui.FormThread.txtLicensor.MaxLength(50)
+Gui.FormThread.txtLicensor.Event(GotFocus,txtLicensor_GotFocus)
+Gui.FormThread.txtLicensor.Mask(">")
+Gui.FormThread.cmdSave.Create(Button)
+Gui.FormThread.cmdSave.Enabled(True)
+Gui.FormThread.cmdSave.Visible(True)
+Gui.FormThread.cmdSave.Zorder(0)
+Gui.FormThread.cmdSave.Size(50,23)
+Gui.FormThread.cmdSave.Position(359,33)
+Gui.FormThread.cmdSave.Caption("Save")
+Gui.FormThread.cmdSave.FontName("Tahoma")
+Gui.FormThread.cmdSave.FontSize(8.25)
+Gui.FormThread.cmdSave.Event(Click,cmdSave_Click)
+Gui.FormThread.GsGridThread.Create(GsGridControl)
+Gui.FormThread.GsGridThread.Enabled(True)
+Gui.FormThread.GsGridThread.Visible(True)
+Gui.FormThread.GsGridThread.Zorder(0)
+Gui.FormThread.GsGridThread.Size(502,431)
+Gui.FormThread.GsGridThread.Position(17,65)
+Gui.FormThread.GsGridThread.Anchor(15)
+Gui.FormThread.GsGridThread.Event(RowCellClick,GsGridThread_RowCellClick)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.SetErrorHandler("Main_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Function.Intrinsic.UI.UsePixels ' Allows you to use Pixels instead of Twips throughout
+
+F.Intrinsic.Control.CallSub(Get_Data)
+F.Intrinsic.Control.CallSub(Set_Prop)
+
+Gui.FormThread..Show
+Gui.FormThread..AlwaysOnTop(True)
+Gui.FormThread..AlwaysOnTop(False)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Main_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Thread_Type.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormThread_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Main.End
+
+Program.Sub.FormThread_UnLoad.Start
+F.Intrinsic.Control.SetErrorHandler("FormThread_UnLoad_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("FormThread_UnLoad_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.Control.End
+Function.Intrinsic.Control.EndIf
+Program.Sub.FormThread_UnLoad.End
+
+Program.Sub.GsGridThread_RowCellClick.Start
+F.Intrinsic.Control.SetErrorHandler("GsGridThread_RowCellClick_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sSql.Declare(String,"")
+
+F.Intrinsic.Control.If(V.Args.Column.UCase,=,"DELETE_ROW")
+	F.Intrinsic.String.Build("Delete From GCG_6869_Thread_Lic Where Thread = '{0}' and Licensor = '{1}'",V.DataTable.Thread(V.Args.RowIndex).Thread!FieldValTrim,V.DataTable.Thread(V.Args.RowIndex).Licensor!FieldValTrim,V.Local.sSql)
+	F.ODBC.Connection!Con.OpenCompanyConnection
+	F.ODBC.Connection!Con.Execute(V.Local.sSql)
+	F.ODBC.Connection!Con.Close
+	F.Data.DataTable.DeleteRow("Thread",V.Args.RowIndex)
+	F.Data.DataTable.AcceptChanges("Thread")
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("GsGridThread_RowCellClick_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Thread_Type.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormThread_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.GsGridThread_RowCellClick.End
+
+Program.Sub.cmdSave_Click.Start
+F.Intrinsic.Control.SetErrorHandler("cmdSave_Click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sLic.Declare(String,"")
+V.Local.sThread.Declare(String,"")
+V.Local.sFilter.Declare(String,"")
+V.Local.sSql.Declare(String,"")
+
+V.Local.sLic.Set(V.Screen.FormThread!txtLicensor.Text)
+V.Local.sThread.Set(V.Screen.FormThread!txtThread.Text)
+
+F.Intrinsic.String.Build("Thread = '{0}' and Licensor = '{1}'",V.Local.sThread.Trim,V.Local.sLic.Trim,V.Local.sFilter)
+
+F.Data.DataView.Create("Thread","Temp",22,V.Local.sFilter,"")
+
+F.Intrinsic.Control.If(V.DataView.Thread!Temp.RowCount--,=,-1)
+	F.Data.DataTable.AddRow("Thread","Thread",V.Local.sThread,"Licensor",V.Local.sLic)
+	F.Intrinsic.String.Build("Insert Into GCG_6869_Thread_Lic (Thread,Licensor) Values ('{0}','{1}')",V.Local.sThread,V.Local.sLic,V.Local.sSql)
+	F.ODBC.Connection!Con.OpenCompanyConnection
+	F.ODBC.Connection!Con.Execute(V.Local.sSql)
+	F.ODBC.Connection!Con.Close
+F.Intrinsic.Control.EndIf
+
+F.Data.DataView.Close("Thread","Temp")
+
+Gui.FormThread.txtLicensor.Text("")
+Gui.FormThread.txtThread.Text("")
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdSave_Click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Thread_Type.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormThread_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.cmdSave_Click.End
+
+Program.Sub.txtLicensor_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtLicensor_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormThread.txtLicensor.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtLicensor_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Thread_Type.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormThread_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtLicensor_GotFocus.End
+
+Program.Sub.txtThread_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtThread_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormThread.txtThread.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtThread_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Thread_Type.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormThread_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtThread_GotFocus.End
+
+Program.Sub.Get_Data.Start
+F.Intrinsic.Control.SetErrorHandler("Get_Data_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.ODBC.Connection!Con.OpenCompanyConnection
+
+F.Data.DataTable.CreateFromSQL("Thread","con","Select rtrim(ucase(Thread)) as Thread, rtrim(ucase(Licensor)) as Licensor From GCG_6869_Thread_Lic Order by Thread,Licensor",True)
+F.Data.DataTable.AddColumn("Thread","DELETE_ROW",String)
+
+F.ODBC.Connection!Con.Close
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Get_Data_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Thread_Type.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormThread_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Get_Data.End
+
+Program.Sub.Set_Prop.Start
+F.Intrinsic.Control.SetErrorHandler("Set_Prop_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormThread.GsGridThread.AddGridviewFromDatatable("GThread","Thread")
+Gui.FormThread.GsGridThread.SetGridviewProperty("GThread","Editable",False)
+Gui.FormThread.GsGridThread.SetGridviewProperty("GThread","ReadOnly",True)
+
+Gui.FormThread.GsGridThread.SetColumnProperty("GThread","DELETE_ROW","Caption"," ")
+Gui.FormThread.GsGridThread.ColumnEdit("GThread","DELETE_ROW","EditorButton","Delete")
+
+Gui.FormThread.GsGridThread.MainView("GThread")
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Set_Prop_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Thread_Type.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormThread_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Set_Prop.End
+
+Program.Sub.Comments.Start
+${$5$}$20.1.8249.18654$}$1
+${$6$}$rking$}$20220819150544067$}$QNdZLVy4bWuiWa9jh1ZTiKVzNnEzrvL4hd7LTDF+I6uDGGGjyKdI7NDYGhIiicdDPV+2Ga8Rdb4=
+Program.Sub.Comments.End
