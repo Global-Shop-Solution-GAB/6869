@@ -1,0 +1,241 @@
+﻿Program.Sub.ScreenSU.Start
+Gui.FormBoxPin..Create(BaseForm)
+Gui.FormBoxPin..Caption("Box/Pin Maintenance")
+Gui.FormBoxPin..Size(295,535)
+Gui.FormBoxPin..MinX(0)
+Gui.FormBoxPin..MinY(0)
+Gui.FormBoxPin..Position(0,0)
+Gui.FormBoxPin..AlwaysOnTop(False)
+Gui.FormBoxPin..FontName("Tahoma")
+Gui.FormBoxPin..FontSize(8.25)
+Gui.FormBoxPin..ControlBox(True)
+Gui.FormBoxPin..MaxButton(True)
+Gui.FormBoxPin..MinButton(True)
+Gui.FormBoxPin..MousePointer(0)
+Gui.FormBoxPin..Moveable(True)
+Gui.FormBoxPin..Sizeable(True)
+Gui.FormBoxPin..ShowInTaskBar(True)
+Gui.FormBoxPin..TitleBar(True)
+Gui.FormBoxPin..Event(UnLoad,FormBoxPin_UnLoad)
+Gui.FormBoxPin.lblBoxPin.Create(Label,"BoxPin",True,19,13,0,16,16,True,0,"Tahoma",8.25,,0,0)
+Gui.FormBoxPin.lblBoxPin.BorderStyle(0)
+Gui.FormBoxPin.txtBoxPin.Create(TextBox,"",True,161,20,0,16,35,True,0,"Tahoma",8.25,,1)
+Gui.FormBoxPin.txtBoxPin.MaxLength(10)
+Gui.FormBoxPin.txtBoxPin.Event(GotFocus,txtBoxPin_GotFocus)
+Gui.FormBoxPin.txtBoxPin.Mask(">")
+Gui.FormBoxPin.cmdSave.Create(Button)
+Gui.FormBoxPin.cmdSave.Enabled(True)
+Gui.FormBoxPin.cmdSave.Visible(True)
+Gui.FormBoxPin.cmdSave.Zorder(0)
+Gui.FormBoxPin.cmdSave.Size(50,23)
+Gui.FormBoxPin.cmdSave.Position(186,34)
+Gui.FormBoxPin.cmdSave.Caption("Save")
+Gui.FormBoxPin.cmdSave.FontName("Tahoma")
+Gui.FormBoxPin.cmdSave.FontSize(8.25)
+Gui.FormBoxPin.cmdSave.Event(Click,cmdSave_Click)
+Gui.FormBoxPin.GsGridBoxPin.Create(GsGridControl)
+Gui.FormBoxPin.GsGridBoxPin.Enabled(True)
+Gui.FormBoxPin.GsGridBoxPin.Visible(True)
+Gui.FormBoxPin.GsGridBoxPin.Zorder(0)
+Gui.FormBoxPin.GsGridBoxPin.Size(271,431)
+Gui.FormBoxPin.GsGridBoxPin.Position(17,65)
+Gui.FormBoxPin.GsGridBoxPin.Anchor(15)
+Gui.FormBoxPin.GsGridBoxPin.Event(RowCellClick,GsGridBoxPin_RowCellClick)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.SetErrorHandler("Main_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Function.Intrinsic.UI.UsePixels ' Allows you to use Pixels instead of Twips throughout
+
+F.Intrinsic.Control.CallSub(Get_Data)
+F.Intrinsic.Control.CallSub(Set_Prop)
+
+Gui.FormBoxPin..Show
+Gui.FormBoxPin..AlwaysOnTop(True)
+Gui.FormBoxPin..AlwaysOnTop(False)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Main_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Box_Pin.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormBoxPin_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Main.End
+
+Program.Sub.FormBoxPin_UnLoad.Start
+F.Intrinsic.Control.SetErrorHandler("FormBoxPin_UnLoad_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("FormBoxPin_UnLoad_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.Control.End
+Function.Intrinsic.Control.EndIf
+Program.Sub.FormBoxPin_UnLoad.End
+
+Program.Sub.GsGridBoxPin_RowCellClick.Start
+F.Intrinsic.Control.SetErrorHandler("GsGridBoxPin_RowCellClick_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sSql.Declare(String,"")
+
+F.Intrinsic.Control.If(V.Args.Column.UCase,=,"DELETE_ROW")
+	F.Intrinsic.String.Build("Delete From GCG_6869_Box_Pin Where Box_Pin = '{0}'",V.DataTable.BoxPin(V.Args.RowIndex).Box_Pin!FieldValTrim,V.Local.sSql)
+	F.ODBC.Connection!Con.OpenCompanyConnection
+	F.ODBC.Connection!Con.Execute(V.Local.sSql)
+	F.ODBC.Connection!Con.Close
+	F.Data.DataTable.DeleteRow("BoxPin",V.Args.RowIndex)
+	F.Data.DataTable.AcceptChanges("BoxPin")
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("GsGridBoxPin_RowCellClick_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Box_Pin.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormBoxPin_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.GsGridBoxPin_RowCellClick.End
+
+Program.Sub.cmdSave_Click.Start
+F.Intrinsic.Control.SetErrorHandler("cmdSave_Click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sBoxPin.Declare(String,"")
+V.Local.sFilter.Declare(String,"")
+V.Local.sSql.Declare(String,"")
+
+V.Local.sBoxPin.Set(V.Screen.FormBoxPin!txtBoxPin.Text)
+
+F.Intrinsic.String.Build("Box_Pin = '{0}'",V.Local.sBoxPin.Trim,V.Local.sFilter)
+
+F.Data.DataView.Create("BoxPin","Temp",22,V.Local.sFilter,"")
+
+F.Intrinsic.Control.If(V.DataView.BoxPin!Temp.RowCount--,=,-1)
+	F.Data.DataTable.AddRow("BoxPin","Box_Pin",V.Local.sBoxPin)
+	F.Intrinsic.String.Build("Insert Into GCG_6869_Box_Pin (Box_Pin) Values ('{0}')",V.Local.sBoxPin,V.Local.sSql)
+	F.ODBC.Connection!Con.OpenCompanyConnection
+	F.ODBC.Connection!Con.Execute(V.Local.sSql)
+	F.ODBC.Connection!Con.Close
+F.Intrinsic.Control.EndIf
+
+F.Data.DataView.Close("BoxPin","Temp")
+
+Gui.FormBoxPin.txtBoxPin.Text("")
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdSave_Click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Box_Pin.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormBoxPin_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.cmdSave_Click.End
+
+Program.Sub.txtWeight_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtWeight_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormBoxPin.txtWeight.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtWeight_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Box_Pin.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormBoxPin_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtWeight_GotFocus.End
+
+Program.Sub.txtBoxPin_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtBoxPin_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormBoxPin.txtBoxPin.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtBoxPin_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Box_Pin.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormBoxPin_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtBoxPin_GotFocus.End
+
+Program.Sub.Get_Data.Start
+F.Intrinsic.Control.SetErrorHandler("Get_Data_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.ODBC.Connection!Con.OpenCompanyConnection
+
+F.Data.DataTable.CreateFromSQL("BoxPin","con","Select rtrim(ucase(Box_Pin)) as Box_Pin From GCG_6869_Box_Pin Order by Box_Pin",True)
+F.Data.DataTable.AddColumn("BoxPin","DELETE_ROW",String)
+
+F.ODBC.Connection!Con.Close
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Get_Data_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Box_Pin.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormBoxPin_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Get_Data.End
+
+Program.Sub.Set_Prop.Start
+F.Intrinsic.Control.SetErrorHandler("Set_Prop_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormBoxPin.GsGridBoxPin.AddGridviewFromDatatable("GBoxPin","BoxPin")
+Gui.FormBoxPin.GsGridBoxPin.SetGridviewProperty("GBoxPin","Editable",False)
+Gui.FormBoxPin.GsGridBoxPin.SetGridviewProperty("GBoxPin","ReadOnly",True)
+
+Gui.FormBoxPin.GsGridBoxPin.SetColumnProperty("GBoxPin","Box_Pin","Caption","Box/Pin")
+Gui.FormBoxPin.GsGridBoxPin.SetColumnProperty("GBoxPin","DELETE_ROW","Caption"," ")
+Gui.FormBoxPin.GsGridBoxPin.ColumnEdit("GBoxPin","DELETE_ROW","EditorButton","Delete")
+
+Gui.FormBoxPin.GsGridBoxPin.MainView("GBoxPin")
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Set_Prop_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6869_Box_Pin.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormBoxPin_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Set_Prop.End
+
+Program.Sub.Comments.Start
+${$5$}$20.1.8249.18654$}$1
+${$6$}$rking$}$20220819150309410$}$QNdZLVy4bWuiWa9jh1ZTiKVzNnEzrvL4hd7LTDF+I6tKy2py9Y7+V/gXpfyYqk2ltKc5YbWCMgE=
+Program.Sub.Comments.End
