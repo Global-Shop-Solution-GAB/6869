@@ -1,0 +1,4 @@
+CREATE TABLE "GCG_6869_Box_Pin"(
+ "Box_Pin" CHAR(10));
+
+CREATE INDEX "GCG_6869_Box_Pin" ON "GCG_6869_Box_Pin"("Box_Pin");
